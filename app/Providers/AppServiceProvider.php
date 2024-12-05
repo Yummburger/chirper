@@ -4,16 +4,15 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as BaseServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class EventServiceProvider extends BaseServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+        protected $listen = [
+            ChirpCreated::class => [
+                SendChirpCreatedNotifications::class,
+        ],
+    ];
 
     /**
      * Bootstrap any application services.
@@ -23,3 +22,4 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
     }
 }
+
